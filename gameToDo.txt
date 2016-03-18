@@ -1,0 +1,40 @@
+/*****************************************************************
+Bees Game to-do list
+*****************************************************************/
+
+/*
+
+- Impliment Draw buffer/Screen buffer system for off-screen rendering implimentation 
+
+
+- Create background
+	
+	- create Canvas layers for each background object type
+
+	- create background layer - base
+		- create base layer color change function
+
+	- create background layer - clouds
+		- create cloud background particle object
+		- Randomise size, direction, transparency and speed
+		- create "cloud" generator function
+		- create cloud init function
+		- create cloud update function
+
+- Create art assests
+
+	- create bee types
+		- create "Queen Bee"
+		- create "Worker Bee"
+		- create "Drone Bee"
+
+
+- create Particle/Entity engine functions
+	
+	- create base "entity" object
+	- create entity "types"
+	- create entity emitter function
+	- create entity update function
+
+ */
+
