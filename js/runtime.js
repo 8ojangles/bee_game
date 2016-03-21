@@ -13,11 +13,15 @@ function draw() {
 
     // background cloud layer
     cloudRenderer();
+
+    // treeline
+    renderBushBG();
+    
     // background grass layer
     renderGrass('farground');
 
     /* **************** game action render layers ********************* */
-
+    renderBush();
     // makeDroneTimed(1000);
 
     // render balloon
@@ -50,6 +54,8 @@ function draw() {
     // foreground grass render layer
     renderGrass('foreground');
 
+    // render large grass
+    renderLargeGrass();
     /* **************** player controls ********************* */
     playerControls();
 

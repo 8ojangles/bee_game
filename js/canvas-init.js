@@ -218,7 +218,7 @@ beehive_sprite.frameW = 576;
 beehive_sprite.frameH = 576;
 beehive_sprite.frameList = [0,576];
 beehive_sprite.frameListH = 576;
-beehive_sprite.destX = cWidth - beehive_sprite.frameW/2 - 30;
+beehive_sprite.destX = cWidth - beehive_sprite.frameW/2 - 150;
 beehive_sprite.destY = floorY - beehive_sprite.frameH/3.15;
 beehive_sprite.destW = beehive_sprite.frameW / 2;
 beehive_sprite.destH = beehive_sprite.frameH / 2;
@@ -1546,27 +1546,67 @@ function renderTestPlayer() {
         thisDisplayY += 15;
         c.fillText("old animationpercent: "+testPlayer.oldanimationPercent,cWidth/2 + 200,thisDisplayY);
     }
-};
+}
+
+// create bush BG images
+// 
+var bushBG_sprite = new Image();
+bushBG_sprite.src = "assetCreation/items/bushBg.png";
+bushBG_sprite.frameW = 2000;
+bushBG_sprite.frameH = 425;
+
+
+
+function renderBushBG(){
+
+    // normal bush background
+    c.drawImage(
+        bushBG_sprite,
+        // source x/y/w/h
+        0,
+        0,
+        bushBG_sprite.frameW,
+        bushBG_sprite.frameH,
+        // destination x/y/w/h
+        0,
+        floorY - 250,
+        cWidth,
+        bushBG_sprite.frameH //grass_large_sprite.frameH
+    );
+
+}
+
+
+// create flower images
+// 
+var flower_head_sprite = new Image();
+flower_head_sprite.src = "assetCreation/items/flowerHeads_152x146px.png";
+flower_head_sprite.frameW = 146;
+flower_head_sprite.frameH = 152;
+flower_head_sprite.frameList = [0,146,292,438];
+flower_head_sprite.frameLen = flower_head_sprite.frameList.length - 1;
+flower_head_sprite.frameNum = 0;
+
 
 var flowerArr = [];
-var randomFlowers = randomInteger(1,5);
-var randomFlowers = 3;
+var randomFlowers = randomInteger(5,10);
+// var randomFlowers = 3;
 
 function makeFlower(numObjects) {
 
     for(var i = 0; i <= numObjects; i++) {
         var flower = {
-            thisX : randomInteger(50,cWidth-350),
-            thisY : randomInteger(cHeight - cHeight/3,cHeight - cHeight/2),
+            thisX : randomInteger(cWidth/2 - 400 ,cWidth/2 + 400),
+            thisY : randomInteger(floorY - 400 ,floorY - 100),
             thisRad : 40,
             thislocalX : 0,
             thisLocalY : 0,
             thisXVel : 0, //randomInteger(-2,2),
             thisYVel : 0,
             thisYVelAcc : 0,
-            thisFrame : 0,
+            thisFrame : randomInteger(0,flower_head_sprite.frameLen),
             baseFrameW : 100,
-            baseFrameH : 120,
+            baseFrameH : 100,
             currFrame : 0,
             scaleFactor : 2,
             fadeFactor : 0.05,
@@ -1597,13 +1637,27 @@ function renderFlower(){
 
             var f = flowerArr[i];
 
+            // normal large grass
+            c.drawImage(
+                flower_head_sprite,
+                // source x/y/w/h
+                flower_head_sprite.frameList[f.thisFrame],
+                0,
+                flower_head_sprite.frameW,
+                flower_head_sprite.frameH,
+                // destination x/y/w/h
+                f.thisX - flower_head_sprite.frameW/2,
+                f.thisY - flower_head_sprite.frameH/2,
+                f.baseFrameW,
+                f.baseFrameH //grass_large_sprite.frameH
+            );
+
+            // c.fillStyle = "#aaaa00";
+            // c.fillCircle(f.thisX,f.thisY,f.thisRad);
             
-            c.fillStyle = "#aaaa00";
-            c.fillCircle(f.thisX,f.thisY,f.thisRad);
-            
-            c.fillStyle = "#aa0000";
-            c.textAlign = "center";
-            c.fillText("Is Target: "+f.isTarget,f.thisX, f.thisY - 60);
+            // c.fillStyle = "#aa0000";
+            // c.textAlign = "center";
+            // c.fillText("Is Target: "+f.isTarget,f.thisX, f.thisY - 60);
 
             // if (debugDisplay || debugBalloon) {
             //     c.strokeStyle = "#f00";
@@ -1631,6 +1685,31 @@ function renderFlower(){
 
 makeFlower(randomFlowers);
 
+
+// create bush image
+
+// create flower images
+// 
+var bush_sprite = new Image();
+bush_sprite.src = "assetCreation/items/bush_700x400px.png";
+bush_sprite.frameW = 700;
+bush_sprite.frameH = 400;
+
+function renderBush() {
+
+    c.drawImage(
+        bush_sprite,
+        0,
+        0,
+        bush_sprite.frameW,
+        bush_sprite.frameH,
+        cWidth/2 - (bush_sprite.frameW*1.5)/2,
+        floorY - (bush_sprite.frameH*1.5) + 150,
+        bush_sprite.frameW*1.5,
+        bush_sprite.frameH*1.5
+    );
+
+}
 
 //////////////////////////////////////////////// 
 // create drone WAYPOINTS OBJECT and other stored points
@@ -1667,8 +1746,8 @@ var droneWaypoints = {
 
 var drone_body_sprite = new Image();
 drone_body_sprite.src = "assetCreation/bees/drone/drone_body_sprite.png";
-drone_body_sprite.frameW = 80;
-drone_body_sprite.frameH = 50;
+drone_body_sprite.frameW = 70;
+drone_body_sprite.frameH = 43;
 drone_body_sprite.frameList = 0;
 // drone_body_sprite.frameLen = drone_body_sprite.frameList.length - 1;
 drone_body_sprite.frameNum = 0;
@@ -1860,8 +1939,8 @@ function renderDrone() {
             // compute sprite offsets to object world origin and direction of travel. Body remains at local position of 0,0
             if (d.isFacingLeft) {
                 // Y offset positions dont change
-                d.backWingPosition = d.computedX + d.backWingOffsetX;
-                d.frontWingPosition = d.computedX + d.frontWingOffsetX;
+                d.backWingPosition = d.computedX ;
+                d.frontWingPosition = d.computedX + d.frontWingOffsetX/1.5;
                 d.frontWingSpriteY = 0;
                 d.backWingSpriteY = 0;
                 d.bodySpriteY = 0;
@@ -1911,8 +1990,8 @@ function renderDrone() {
                 drone_body_sprite.frameH
             );
 
-            c.strokeStyle = "#ff0000";
-            c.strokeRect(d.computedX,d.computedY,drone_body_sprite.frameW,drone_body_sprite.frameH);
+            // c.strokeStyle = "#ff0000";
+            // c.strokeRect(d.computedX,d.computedY,drone_body_sprite.frameW,drone_body_sprite.frameH);
 
             // 3. eyes
             // c.drawImage(bee_eyes, bee_eyes.frameList[bee_eyes.frameNum], eyeSpriteRow, bee_eyes.frameW, bee_eyes.frameH, eyesPosX, eyesPosY, bee_eyes.frameW, bee_eyes.frameH);
@@ -1932,41 +2011,41 @@ function renderDrone() {
                 drone_wings_front_sprite.frameW,
                 drone_wings_front_sprite.frameH
             );
-            if (i == 0) {
-                c.fillStyle = "#00aa00"
-            } else {
-                c.fillStyle = "#ff0000"
-            }
-            c.textAlign = "left";
-            c.fillText(d.id, d.computedX + 45, d.computedY - 30);
+            // if (i == 0) {
+            //     c.fillStyle = "#00aa00"
+            // } else {
+            //     c.fillStyle = "#ff0000"
+            // }
+            // c.textAlign = "left";
+            // c.fillText(d.id, d.computedX + 45, d.computedY - 30);
 
             /* Simple circle display for drone position */
             /*
             c.fillStyle = "#f0a388";
             c.fillCircle(d.computedX, d.computedY, 20);
             */
-            var splitText = 20;
-            c.fillStyle = "#ff0000"
-            if (i == 0) {
-                c.fillText("isHome:"+d.isHome, 30, splitText);
-                splitText += 20;
-                c.fillText("isLeavingHome: "+d.isLeavingHome, 30, splitText);
-                splitText += 20;
-                c.fillText("isArrivingHome: "+d.isArrivingHome, 30, splitText);
-                splitText += 20;
-                c.fillText("isTravellingToHiveDock: "+d.isTravellingToHiveDock, 30, splitText);
-                splitText += 20;
-                c.fillText("isTravellingToTarget: "+d.isTravellingToTarget, 30, splitText);
-                splitText += 20;
-                c.fillText("Flower is Target: "+flowerArr[d.targetNum].isTarget, 30, splitText);
-                splitText += 20;
-                c.fillText("waiting for target: "+d.waitingForTarget, 30, splitText);
-                splitText += 20;
-                c.fillText("waypoint complete: "+d.waypointComplete, 30, splitText);
-                splitText += 20;
-                c.fillText("target aquired: "+d.targetAquired, 30, splitText);
+            // var splitText = 20;
+            // c.fillStyle = "#ff0000"
+            // if (i == 0) {
+            //     c.fillText("isHome:"+d.isHome, 30, splitText);
+            //     splitText += 20;
+            //     c.fillText("isLeavingHome: "+d.isLeavingHome, 30, splitText);
+            //     splitText += 20;
+            //     c.fillText("isArrivingHome: "+d.isArrivingHome, 30, splitText);
+            //     splitText += 20;
+            //     c.fillText("isTravellingToHiveDock: "+d.isTravellingToHiveDock, 30, splitText);
+            //     splitText += 20;
+            //     c.fillText("isTravellingToTarget: "+d.isTravellingToTarget, 30, splitText);
+            //     splitText += 20;
+            //     c.fillText("Flower is Target: "+flowerArr[d.targetNum].isTarget, 30, splitText);
+            //     splitText += 20;
+            //     c.fillText("waiting for target: "+d.waitingForTarget, 30, splitText);
+            //     splitText += 20;
+            //     c.fillText("waypoint complete: "+d.waypointComplete, 30, splitText);
+            //     splitText += 20;
+            //     c.fillText("target aquired: "+d.targetAquired, 30, splitText);
 
-            }
+            // }
 
 
         } // close FOR loop
@@ -2024,7 +2103,6 @@ function aquireDroneTarget(drone, target) {
                 }
 
                 i = flowerArr_length;
-                // while(i--) {
                 for (var i = flowerArr_length; i !== 0; i--) {
 
                     var f = flowerArr[i];
@@ -2434,5 +2512,107 @@ function makeDroneTimed(timer) {
             makeDrone(1);
         }
     }
+
+}
+
+
+
+/* Make large grass sprites */
+
+var grass_large_sprite = new Image();
+grass_large_sprite.src = "assetCreation/items/grassLarge_450x715px.png";
+grass_large_sprite.frameW = 450;
+grass_large_sprite.frameH = 715;
+
+var grass_large_sprite_blurred = new Image();
+grass_large_sprite_blurred.src = "assetCreation/items/grassLarge_450x715px_blurred.png";
+grass_large_sprite_blurred.frameW = 450;
+grass_large_sprite_blurred.frameH = 715;
+
+var grass_large_sprite_blurred_less = new Image();
+grass_large_sprite_blurred_less.src = "assetCreation/items/grassLarge_450x715px_blurred_less.png";
+grass_large_sprite_blurred_less.frameW = 450;
+grass_large_sprite_blurred_less.frameH = 715;
+
+function renderLargeGrass() {
+
+    // normal large grass
+    c.drawImage(
+        grass_large_sprite,
+        0,
+        0,
+        grass_large_sprite.frameW,
+        grass_large_sprite.frameH,
+        0 - grass_large_sprite.frameW/2.5,
+        cHeight - grass_large_sprite.frameH/1.1,
+        grass_large_sprite.frameW*1.5,
+        grass_large_sprite.frameH*1.5 //grass_large_sprite.frameH
+    );
+
+    c.drawImage(
+        // image pointer
+        grass_large_sprite,
+        // source image x/y/w/h
+        grass_large_sprite.frameW,
+        0,
+        grass_large_sprite.frameW,
+        grass_large_sprite.frameH,
+        // destination image x/y/w/h
+        cWidth - grass_large_sprite.frameW/1.1,
+        cHeight - grass_large_sprite.frameH/1.1,
+        grass_large_sprite.frameW*1.5,
+        grass_large_sprite.frameH*1.5
+    );
+
+    // blurred grass
+    c.drawImage(
+        grass_large_sprite_blurred_less,
+        0,
+        0,
+        grass_large_sprite_blurred_less.frameW,
+        grass_large_sprite_blurred_less.frameH,
+        0 - grass_large_sprite_blurred_less.frameW/0.9,
+        0+400, //cHeight - grass_large_sprite_blurred_less.frameH + 100,
+        grass_large_sprite_blurred_less.frameW*2,
+        cHeight //grass_large_sprite_blurred_less.frameH
+    );
+
+    c.drawImage(
+        grass_large_sprite_blurred_less,
+        grass_large_sprite_blurred_less.frameW,
+        0,
+        grass_large_sprite_blurred_less.frameW,
+        grass_large_sprite_blurred_less.frameH,
+        cWidth - grass_large_sprite_blurred_less.frameW + 100,
+        0+400,
+        grass_large_sprite_blurred_less.frameW*2,
+        cHeight
+    );
+
+    // very blurred grass
+    c.drawImage(
+        grass_large_sprite_blurred,
+        0,
+        0,
+        grass_large_sprite_blurred.frameW,
+        grass_large_sprite_blurred.frameH,
+        0 - grass_large_sprite_blurred.frameW*2,
+        0-600, //cHeight - grass_large_sprite_blurred.frameH + 100,
+        grass_large_sprite_blurred.frameW*3.2,
+        cHeight*1.75 //grass_large_sprite_blurred.frameH
+    );
+
+    c.drawImage(
+        grass_large_sprite_blurred,
+        grass_large_sprite_blurred.frameW,
+        0,
+        grass_large_sprite_blurred.frameW,
+        grass_large_sprite_blurred.frameH,
+        cWidth - grass_large_sprite_blurred.frameW*1.5,
+        0-600,
+        grass_large_sprite_blurred.frameW*4,
+        cHeight*1.5
+    );
+
 
 }
