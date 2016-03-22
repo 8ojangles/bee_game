@@ -1,0 +1,128 @@
+/*
+****************************************************************************
+****************************************************************************
+TO DO LIST
+****************************************************************************
+****************************************************************************
+
+
+****************************************************************************
+Presentation
+****************************************************************************
+
+- create Opening screens
+
+
+- create help/instruction page
+
+
+- create Level engine
+	
+	- create level generator system with win/fail conditions
+
+	- create Level transition engine
+
+	- create "level start" transition
+
+	- create "level end" transition
+
+	- create "level failed" transition
+
+	- create "level succeeded" transition
+
+
+- impliment player keyboard key selection
+
+****************************************************************************
+
+
+
+****************************************************************************
+Artwork (raster/vector)
+****************************************************************************
+
+- create enemy types
+
+
+- create enemy animation states
+
+
+- create Drone animation states
+
+
+- create Flower animation states
+
+
+- create background animation states
+
+
+- create special effects 
+
+****************************************************************************
+
+
+
+****************************************************************************
+Game mechanics
+****************************************************************************
+
+- impliment drone collection and depositing mechanics 
+
+
+- impliment "enemy" insects
+
+
+- impliment player shooting mechanics
+
+
+- research collision detection mechanics and optimisation techniques (space partitioning)
+
+
+- decide collision detection strategy (e.g. simple distance check, bounding box colour check, etc...)
+
+
+- impliment collision detection
+
+****************************************************************************
+
+
+****************************************************************************
+Engineering
+****************************************************************************
+
+- optimise sprite artwork into single sprite sheet
+
+
+- create Canvas layers
+
+
+- Impliment Draw buffer/Screen buffer system for off-screen rendering implimentation
+
+
+- Particle emmision engine
+
+	- create single particle emmision engine
+
+	- create "actor/entity" class for all items/actors in game
+
+	- impliment particle pool for use in emmision engine
+
+
+- translate all dimentions into percentages (or other proportional unit) to make game responsive to screen sizes/changes
+
+
+- monitor performance
+
+
+- optimise runtime performance
+
+
+- tidy up code base
+
+
+****************************************************************************
+
+
+****************************************************************************
+****************************************************************************
+ */
